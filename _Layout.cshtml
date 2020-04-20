@@ -1,0 +1,238 @@
+﻿@using AccountsAppWeb.Infrastructure
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" type="image/png" href="~/Content/Images/favi.png" />
+    <title>Kccsasr</title>
+    @Styles.Render("~/Content/mastercss")
+    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.combobox.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/masterjs")
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top brdr-btm" role="navigation" style="margin-bottom: 0">
+            <div class="toggle-main">
+                <div class="navbar-header logo-container2">
+                    <a class="navbar-brand logo">
+                        <h1>Kccsasr</h1>
+                    </a>
+
+                    <ul class="nav navbar-top-links navbar-right pull-right">
+                        <!-- /.dropdown -->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa  fa-bar-chart-o  fa-fw"></i> Financial Year:
+                                <span id="spnSelectedYear">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        @UserManager.User.FinTitle
+                                    }
+                                </span>
+                            </a>
+                            <ul id="ulyears" class="dropdown-menu dropdown-user"></ul>
+                        </li>
+                        <!-- /.dropdown -->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-user fa-fw"></i>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    @UserManager.User.InstName
+                                }
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li id="menuChangePassword">
+                                    <a href="/Account/ChangePassword"><i class="fa fa-gear fa-fw"></i> Change Password</a>
+                                </li>
+                                <li id="menuViewPassword">
+                                    <a href="/Account/ViewPassword"><i class="fa fa-gear fa-fw"></i> View Password</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="/Account/Logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- /.dropdown -->
+                    </ul>
+                    <!-- /.navbar-top-links -->
+                </div>
+                <!-- /.navbar-header -->
+
+                <button type="button" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <!-- /.navbar-top-links -->
+            <div class="navbar-default sidebar" role="navigation" id="navMainMenu">
+                <div class="sidebar-nav ">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> Administrator<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/Admin/AccountLedger">Account Ledger</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/AccountGroup">Account group</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/NotificationLedgerMaster">Notification Ledger Master</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/ReconciliationMaster">Reconciliation Master</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/NegativeBalance">View Negative Balance</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/BalanceTransfer">Balance Transfer</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/TableContent">TableContent</a>
+                                </li>
+                                <li id="menuPermission">
+                                    <a href="/Admin/TransactionPermissions">Transaction Permissions</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-credit-card fa-fw"></i> Transaction<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li id="menuAddTransaction">
+                                    <a href="/Transactions/Index">Add</a>
+                                </li>
+                                <li>
+                                    <a href="/Transactions/List">List</a>
+                                </li>
+                                <li id="menuUpdateTransaction">
+                                    <a href="/Transactions/ModifyTransaction">Modify</a>
+                                </li>
+                                <li>
+                                    <a href="/Transactions/SearchTransaction">Search</a>
+                                </li>
+                                <li>
+                                    <a href="/Transactions/MoveTransactions">Move</a>
+                                </li>
+                                <li>
+                                    <a href="/Transactions/ResetVouchers">Reset Vouchers</a>
+                                </li>
+
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-dashboard fa-fw"></i>Reports<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="#">Final Results <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="/Reports/FinalResultBalanceSheet">Balance Sheet</a>
+                                        </li>
+                                        <li>
+                                            <a href="/Reports/IncomeExpenditureDetails">Income Expenditure A/C</a>
+                                        </li>
+                                        <li id="commonIncomeExpenditureReprt">
+                                            <a href="/Reports/CommonIncomeExpenditureDetails">Common Income Expenditure A/C</a>
+                                        </li>
+
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+                                <li>
+                                    <a href="trial-balance.html">Trial  Balance <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="#">Closing Trial <span class="fa arrow"></span></a>
+                                            <ul class="nav nav-forth-level">
+                                                <li>
+                                                    <a href="/Reports/CloseTrailBalance">- Trial Balance Group</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/Reports/CloseTrailBalanceSchedule">- Trial Balance Schedule</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/Reports/CloseTrailBalanceDetailed">- Trial Balance detailed</a>
+                                                </li>
+
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">Opening Trial <span class="fa arrow"></span></a>
+                                            <ul class="nav nav-forth-level">
+                                                <li>
+                                                    <a href="/Reports/OpeningTrailBalance">- Trial Balance Group</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/Reports/OpenTrailBalanceSchedule">- Trial Balance Schedule</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/Reports/OpenTrailBalanceDetailed">- Trial Balance detailed</a>
+                                                </li>
+
+                                            </ul>
+                                        </li>
+
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+                                <li>
+                                    <a href="#">Account Books <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="/Reports/SingleLedgerAccountBook">Ledger Statements</a>
+                                        </li>
+                                        <li>
+                                            <a href="/Reports/CashDayBook">Cash/Day Book</a>
+                                        </li>
+
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+                                <li>
+                                    <a href="/Reports/ViewNotification">View Notification</a>
+                                </li>
+                                <li>
+                                    <a href="/Reports/ReconciliationReport">Reconciliation Report</a>
+                                </li>
+                                <li id="menuGeneralRevenueReport">
+                                    <a href="/Reports/GenerateRevenueReport">Consolidated General Revenue</a>
+                                </li>
+                                <li id="menuScheduleWiseReprt">
+                                    <a href="/Reports/ScheduledWiseReport">Schedule Wise Report</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+        <div id="page-wrapper">
+            @RenderBody()
+            <div id="footer">
+                <p class="text-muted credit">&copy; 2018 Kccsasr, All Rights Reserved</p>
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <div class="loading novisibility" id="divLoading">Loading&#8230;</div>
+    <!-- /#wrapper -->
+</body>
+</html>
